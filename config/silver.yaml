@@ -1,0 +1,30 @@
+tables:
+    products:
+        inputs:
+            aisles: aisles
+            departments: departments
+            products: products
+        combine: join
+        joins:
+            -   left: products
+                right: aisles
+                join_on: aisle_id
+                how: left
+            -   left: products
+                right: departments
+                join_on: department_id
+                how: left
+        output: products
+    orders:
+        inputs:
+            -   orders
+        combine: single
+        output: orders
+        fillna:
+            days_since_prior_order: 0
+    order_product:
+        inputs:
+            -   order_products__prior
+            -   order_products__train
+        combine: union
+        output: order_product
