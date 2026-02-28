@@ -1,9 +1,9 @@
 tables:
     products:
         inputs:
-            aisles: aisles
-            departments: departments
-            products: products
+            aisles: /opt/airflow/data/bronze/aisles
+            departments: /opt/airflow/data/bronze/departments
+            products: /opt/airflow/data/bronze/products
         combine: join
         joins:
             -   left: products
@@ -14,17 +14,19 @@ tables:
                 right: departments
                 join_on: department_id
                 how: left
-        output: products
+        output: /opt/airflow/data/silver/dim_products
     orders:
         inputs:
-            -   orders
+            -   /opt/airflow/data/bronze/orders
         combine: single
-        output: orders
+        output: /opt/airflow/data/silver/dim_orders
         fillna:
             days_since_prior_order: 0
     order_product:
         inputs:
-            -   order_products__prior
-            -   order_products__train
+            -   /opt/airflow/data/bronze/order_products__prior
+            -   /opt/airflow/data/bronze/order_products__train
         combine: union
-        output: order_product
+        output: /opt/airflow/data/silver/fact_order_product
+bucket: "instacart-platform"
+gcs_prefix: "silver"

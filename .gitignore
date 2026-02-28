@@ -1,2 +1,13 @@
 __pycache__
 data/raw
+*.bat
+key.json
+logs
+plugins
+*.yaml
+Dockerfile
+*.txt
+gold
+*.crc
+_SUCCESS
+.dockerignore
