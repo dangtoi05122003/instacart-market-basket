@@ -1,0 +1,4 @@
+path: /opt/spark/data/raw
+outpath: /opt/spark/data/bronze
+gcs_prefix: bronze
+bucket: instacart-platform

@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_aisles
+    description: "Danh mục các kệ hàng"
+    columns:
+      - name: aisle_id
+        description: "Mã định danh duy nhất của mỗi kệ hàng"
+      - name: aisle_name
+        description: "Tên của kệ hàng"

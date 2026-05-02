@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_order_products__train
+    description: "Chi tiết các sản phẩm trong những đơn hàng"
+    columns:
+      - name: order_id
+        description: "Mã định danh đơn hàng"
+      - name: product_id
+        description: "Mã định danh sản phẩm"
+      - name: add_to_cart_order
+        description: "Thứ tự sản phẩm được thêm vào giỏ hàng"
+      - name: reordered
+        description: "Sản phẩm đã từng được khách hàng mua trước đó"

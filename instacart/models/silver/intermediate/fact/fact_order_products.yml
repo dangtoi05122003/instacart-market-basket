@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fact_order_products
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id

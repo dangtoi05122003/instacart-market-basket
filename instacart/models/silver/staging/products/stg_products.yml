@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_products
+    description: "Bảng danh mục sản phẩm"
+    columns:
+      - name: product_id
+        description: "Mã định danh duy nhất của sản phẩm"
+      - name: product_name
+        description: "Tên đầy đủ của sản phẩm"
+      - name: aisle_id
+        description: "Mã định danh kệ hàng"
+      - name: department_id
+        description: "Mã định danh ngành hàng"

@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Thông tin chi tiết về các đơn hàng của người dùng"
+    columns:
+      - name: order_id
+        description: "Mã định danh duy nhất của đơn hàng"
+      - name: user_id
+        description: "Mã định danh của khách hàng"
+      - name: eval_set
+        description: "Phân loại đơn hàng (prior, train, test)"
+      - name: order_number
+        description: "Số thứ tự đơn hàng của người dùng đó"
+      - name: order_dow
+        description: "Ngày trong tuần đơn hàng được đặt"
+      - name: days_since_prior_order
+        description: "Số ngày kể từ đơn hàng trước đó"

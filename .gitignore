@@ -1,13 +1,10 @@
 __pycache__
-data/raw
+data
 *.bat
 key.json
 logs
-plugins
-*.yaml
-Dockerfile
-*.txt
-gold
 *.crc
 _SUCCESS
 .dockerignore
+profiles.yml
+powerbi

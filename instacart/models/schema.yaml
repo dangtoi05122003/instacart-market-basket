@@ -1,0 +1,42 @@
+version: 2
+sources:
+  - name: gcs_staging
+    database: data-488519
+    schema: instacart
+    tables:
+      - name: bronze_aisles
+        external:
+          location: 'gs://instacart-platform/bronze/aisles/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'
+      - name: bronze_departments
+        external:
+          location: 'gs://instacart-platform/bronze/departments/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'
+      - name: bronze_order_products__prior
+        external:
+          location: 'gs://instacart-platform/bronze/order_products__prior/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'
+      - name: bronze_order_products__train
+        external:
+          location: 'gs://instacart-platform/bronze/order_products__train/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'
+      - name: bronze_orders
+        external:
+          location: 'gs://instacart-platform/bronze/orders/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'
+      - name: bronze_products
+        external:
+          location: 'gs://instacart-platform/bronze/products/*.parquet'
+          source_format: PARQUET
+          options:
+            format: 'PARQUET'

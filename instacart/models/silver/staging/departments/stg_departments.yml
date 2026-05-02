@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_departments
+    description: "Danh mục các hàng chính"
+    columns:
+      - name: department_id
+        description: "Mã định danh duy nhất"
+      - name: department_name
+        description: "Tên ngành hàng"

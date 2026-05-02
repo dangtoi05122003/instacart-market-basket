@@ -1,0 +1,15 @@
+general:
+  default_settings:
+    owner: "instacart"
+    retries: 5
+    retry_delay_min: 5
+    start_date: "2025-05-05"
+
+  dag_configs:
+    - dag_id: "ingestion"
+      dag_type: "bronze"
+      schedule_interval: null
+      max_active_runs: 1
+      catchup: false
+      timeout_hours: 9
+      script_path: "/opt/spark/src/ingestion/bronze.py"

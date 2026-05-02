@@ -1,0 +1,82 @@
+services:
+  airflow:
+    build: ./docker/airflow
+    container_name: airflow
+    user: root
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - instacart
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./config:/opt/airflow/config
+      - ./src:/opt/airflow/src
+      - ./key.json:/opt/airflow/key.json
+      - ./data:/opt/airflow/data
+      - ./plugins:/opt/airflow/plugins
+      - ./profiles.yml:/opt/airflow/profiles.yml
+      - ./instacart:/opt/airflow/instacart
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/key.json
+      - PYTHONPATH=/opt/airflow/src:/opt/airflow/plugins
+      - AIRFLOW_BRONZE_PATH=/opt/airflow/dags/configs/bronze
+      - AIRFLOW_SILVER_PATH=/opt/airflow/dags/configs/silver
+      - AIRFLOW_GOLD_PATH=/opt/airflow/dags/configs/gold
+    command: >
+      bash -c "
+      airflow db migrate &&
+      airflow users create \
+      --username admin \
+      --password admin \
+      --firstname admin \
+      --lastname admin \
+      --role Admin \
+      --email admin@example.com || true &&
+      (airflow scheduler & exec airflow webserver)
+      "
+  postgres:
+    image: postgres:13
+    container_name: airflow-postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+    networks:
+      - instacart
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+    restart: always
+  spark:
+    build: ./docker/spark
+    container_name: spark
+    networks:
+      - instacart
+    volumes:
+      - ./src:/opt/spark/src
+      - ./jars:/opt/spark/extra_jars/
+      - ./key.json:/opt/spark/key.json
+      - ./config:/opt/spark/config
+      - ./data:/opt/spark/data
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/spark/key.json
+      - PYTHONPATH=/opt/spark/src:/opt/spark/plugins
+    entrypoint: ["tail", "-f", "/dev/null"]
+volumes:
+  postgres-db-volume:
+networks:
+  instacart:
+    driver: bridge
